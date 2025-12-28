@@ -1,0 +1,21 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "liltrip.peaceful_miner.mixin.client",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "LivingEntityRendererMixin",
+    "LivingEntityRenderStateMixin",
+    "MinecraftClientMixin",
+    "ArmorFeatureRendererMixin",
+    "EquipmentRendererMixin",
+    "ClientPlayerEntityMixin",
+    "InventoryDropProtectionMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

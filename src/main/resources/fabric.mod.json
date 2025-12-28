@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "peacefullminer",
+  "version": "${version}",
+  "name": "Peaceful Miner",
+  "description": "Legacy peaceful mining mod from cosmic prisons, this also implements the ability to right click while mining & a satchel hud.",
+  "authors": ["liltrip"],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/peacefullminer/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-datagen": [
+      "liltrip.peaceful_miner.client.Peaceful_minerDataGenerator"
+    ],
+    "client": [
+      "liltrip.peaceful_miner.client.Peaceful_minerClient"
+    ],
+    "modmenu": [
+      "liltrip.peaceful_miner.client.ModMenuIntegration"
+    ],
+    "main": [
+      "liltrip.peaceful_miner.Peaceful_miner"
+    ]
+  },
+  "mixins": [
+    "peacefullminer.mixins.json",
+    {
+      "config": "peacefullminer.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}

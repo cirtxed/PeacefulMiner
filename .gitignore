@@ -1,0 +1,28 @@
+.gradle
+build/
+bin/
+!gradle-wrapper.jar
+
+# Log files
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDEA
+.idea/
+*.iml
+*.iws
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Visual Studio Code
+.vscode/
+
+# Fabric
+run/
+.fabric/
