@@ -59,14 +59,19 @@ public class SatchelHud implements HudRenderCallback, ClientTickEvents.EndTick {
 
         // Calculate total width and height
         int maxWidth = 0;
+        boolean showIcons = Peaceful_miner.CONFIG.satchelHudShowIcons;
+        int iconOffset = showIcons ? 12 : 0;
+
         for (SatchelUtil.SatchelInfo satchel : cachedSatchels) {
-            String text = String.format("%s: %.1f%% (%d/%d)", 
-                satchel.name, satchel.getPercentage() * 100, satchel.count, satchel.capacity);
-            maxWidth = Math.max(maxWidth, textRenderer.getWidth(text));
+            String text = showIcons ? 
+                String.format("%.1f%% (%d/%d)", satchel.getPercentage() * 100, satchel.count, satchel.capacity) :
+                String.format("%s: %.1f%% (%d/%d)", satchel.name, satchel.getPercentage() * 100, satchel.count, satchel.capacity);
+            maxWidth = Math.max(maxWidth, textRenderer.getWidth(text) + iconOffset);
         }
         
-        if (maxWidth > 0) {
-            int totalHeight = cachedSatchels.size() * 10;
+        if (maxWidth > 0 && Peaceful_miner.CONFIG.satchelHudShowBackground) {
+            int lineHeight = showIcons ? 16 : 10;
+            int totalHeight = cachedSatchels.size() * lineHeight;
             // Draw black border
             int borderColor = 0xFF000000;
             
@@ -82,12 +87,27 @@ public class SatchelHud implements HudRenderCallback, ClientTickEvents.EndTick {
 
         int currentY = scaledY;
         for (SatchelUtil.SatchelInfo satchel : cachedSatchels) {
-            String text = String.format("%s: %.1f%% (%d/%d)", 
-                satchel.name, satchel.getPercentage() * 100, satchel.count, satchel.capacity);
+            String text = showIcons ? 
+                String.format("%.1f%% (%d/%d)", satchel.getPercentage() * 100, satchel.count, satchel.capacity) :
+                String.format("%s: %.1f%% (%d/%d)", satchel.name, satchel.getPercentage() * 100, satchel.count, satchel.capacity);
             
             int textColor = getPercentColor(satchel.getPercentage());
-            drawContext.drawText(textRenderer, text, scaledX, currentY, textColor, true);
-            currentY += 10;
+            
+            if (showIcons && satchel.stack != null) {
+                // Draw icon
+                drawContext.getMatrices().pushMatrix();
+                // Scale back down for item rendering as drawItem expects normal coordinates, but we are inside a scaled matrix
+                // Actually, drawItem uses the current matrix, so we might need to adjust
+                // But usually it's better to render item at 0.5x if HUD is 2.0x etc.
+                // However, let's keep it simple first.
+                drawContext.drawItem(satchel.stack, scaledX, currentY - 3);
+                drawContext.getMatrices().popMatrix();
+                
+                drawContext.drawText(textRenderer, text, scaledX + 18, currentY + 1, textColor, Peaceful_miner.CONFIG.satchelHudTextShadow);
+            } else {
+                drawContext.drawText(textRenderer, text, scaledX, currentY, textColor, Peaceful_miner.CONFIG.satchelHudTextShadow);
+            }
+            currentY += showIcons ? 16 : 10;
         }
         
         drawContext.getMatrices().popMatrix();

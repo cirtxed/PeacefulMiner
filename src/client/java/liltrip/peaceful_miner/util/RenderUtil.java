@@ -2,6 +2,7 @@ package liltrip.peaceful_miner.util;
 
 import liltrip.peaceful_miner.Peaceful_miner;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.entity.state.ArmorStandEntityRenderState;
 import net.minecraft.client.render.entity.state.BipedEntityRenderState;
 import net.minecraft.client.render.entity.state.LivingEntityRenderState;
 import net.minecraft.client.render.entity.state.PlayerEntityRenderState;
@@ -11,8 +12,8 @@ public class RenderUtil {
     public static boolean shouldBeTranslucent(LivingEntityRenderState state) {
         if (state == null) return false;
 
-        // Ignore armor stands
-        if (state.getClass().getName().contains("ArmorStand")) {
+        // Ignore armor stands and invisible entities
+        if (state instanceof ArmorStandEntityRenderState || state.invisible) {
             return false;
         }
 
@@ -32,7 +33,17 @@ public class RenderUtil {
     }
 
     public static boolean isPlayerState(LivingEntityRenderState state) {
-        if (state instanceof PlayerEntityRenderState || state instanceof BipedEntityRenderState) {
+        if (state instanceof PlayerEntityRenderState) {
+            return true;
+        }
+        
+        // ArmorStandEntityRenderState often extends BipedEntityRenderState, 
+        // but we want to exclude it if it's explicitly an armor stand.
+        if (state instanceof ArmorStandEntityRenderState) {
+            return false;
+        }
+
+        if (state instanceof BipedEntityRenderState) {
             return true;
         }
 
@@ -40,7 +51,8 @@ public class RenderUtil {
             Class<?> clazz = state.getClass();
             while (clazz != null && clazz != Object.class) {
                 String name = clazz.getName();
-                if (name.contains("Player") || name.contains("Biped") || name.contains("Armor")) {
+                // Exclude Armor from matches here as it matches ArmorStand
+                if (name.contains("Player") || name.contains("Biped")) {
                     return true;
                 }
                 clazz = clazz.getSuperclass();

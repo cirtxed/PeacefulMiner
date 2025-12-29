@@ -101,34 +101,52 @@ public class ModMenuIntegration implements ModMenuApi {
             this.addDrawableChild(ButtonWidget.builder(Text.of("Satchel HUD: " + (Peaceful_miner.CONFIG.showSatchelHud ? "ON" : "OFF")), button -> {
                 Peaceful_miner.CONFIG.showSatchelHud = !Peaceful_miner.CONFIG.showSatchelHud;
                 button.setMessage(Text.of("Satchel HUD: " + (Peaceful_miner.CONFIG.showSatchelHud ? "ON" : "OFF")));
+            }).dimensions(centerX - 100, startY - 25, 200, 20).build());
+
+            // Background Toggle
+            this.addDrawableChild(ButtonWidget.builder(Text.of("Show Background: " + (Peaceful_miner.CONFIG.satchelHudShowBackground ? "ON" : "OFF")), button -> {
+                Peaceful_miner.CONFIG.satchelHudShowBackground = !Peaceful_miner.CONFIG.satchelHudShowBackground;
+                button.setMessage(Text.of("Show Background: " + (Peaceful_miner.CONFIG.satchelHudShowBackground ? "ON" : "OFF")));
             }).dimensions(centerX - 100, startY, 200, 20).build());
+
+            // Text Shadow Toggle
+            this.addDrawableChild(ButtonWidget.builder(Text.of("Text Shadow: " + (Peaceful_miner.CONFIG.satchelHudTextShadow ? "ON" : "OFF")), button -> {
+                Peaceful_miner.CONFIG.satchelHudTextShadow = !Peaceful_miner.CONFIG.satchelHudTextShadow;
+                button.setMessage(Text.of("Text Shadow: " + (Peaceful_miner.CONFIG.satchelHudTextShadow ? "ON" : "OFF")));
+            }).dimensions(centerX - 100, startY + 25, 98, 20).build());
+
+            // Show Icons Toggle
+            this.addDrawableChild(ButtonWidget.builder(Text.of("Icons: " + (Peaceful_miner.CONFIG.satchelHudShowIcons ? "ON" : "OFF")), button -> {
+                Peaceful_miner.CONFIG.satchelHudShowIcons = !Peaceful_miner.CONFIG.satchelHudShowIcons;
+                button.setMessage(Text.of("Icons: " + (Peaceful_miner.CONFIG.satchelHudShowIcons ? "ON" : "OFF")));
+            }).dimensions(centerX + 2, startY + 25, 98, 20).build());
 
             // Dynamic Colors Toggle
             this.addDrawableChild(ButtonWidget.builder(Text.of("Dynamic Colors: " + (Peaceful_miner.CONFIG.satchelHudDynamicColors ? "ON" : "OFF")), button -> {
                 Peaceful_miner.CONFIG.satchelHudDynamicColors = !Peaceful_miner.CONFIG.satchelHudDynamicColors;
                 button.setMessage(Text.of("Dynamic Colors: " + (Peaceful_miner.CONFIG.satchelHudDynamicColors ? "ON" : "OFF")));
-            }).dimensions(centerX - 100, startY + 25, 200, 20).build());
+            }).dimensions(centerX - 100, startY + 50, 200, 20).build());
 
             // Empty Color Cycle
             this.addDrawableChild(ButtonWidget.builder(Text.of("Empty: " + getColorName(Peaceful_miner.CONFIG.satchelHudColorEmpty)), button -> {
                 Peaceful_miner.CONFIG.satchelHudColorEmpty = getNextColor(Peaceful_miner.CONFIG.satchelHudColorEmpty);
                 button.setMessage(Text.of("Empty: " + getColorName(Peaceful_miner.CONFIG.satchelHudColorEmpty)));
-            }).dimensions(centerX - 100, startY + 50, 98, 20).build());
+            }).dimensions(centerX - 100, startY + 75, 98, 20).build());
 
             // Full Color Cycle
             this.addDrawableChild(ButtonWidget.builder(Text.of("Full: " + getColorName(Peaceful_miner.CONFIG.satchelHudColorFull)), button -> {
                 Peaceful_miner.CONFIG.satchelHudColorFull = getNextColor(Peaceful_miner.CONFIG.satchelHudColorFull);
                 button.setMessage(Text.of("Full: " + getColorName(Peaceful_miner.CONFIG.satchelHudColorFull)));
-            }).dimensions(centerX + 2, startY + 50, 98, 20).build());
+            }).dimensions(centerX + 2, startY + 75, 98, 20).build());
 
             // Satchel HUD Position Button
             this.addDrawableChild(ButtonWidget.builder(Text.of("Edit HUD Position"), button -> {
                 this.client.setScreen(new SatchelHudPositionScreen(this));
-            }).dimensions(centerX - 100, startY + 75, 200, 20).build());
+            }).dimensions(centerX - 100, startY + 100, 200, 20).build());
 
             this.addDrawableChild(ButtonWidget.builder(Text.of("Back"), button -> {
                 this.client.setScreen(this.parent);
-            }).dimensions(centerX - 100, startY + 110, 200, 20).build());
+            }).dimensions(centerX - 100, startY + 125, 200, 20).build());
         }
 
         private static final int[] COLORS = {

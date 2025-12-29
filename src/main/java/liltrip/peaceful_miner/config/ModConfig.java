@@ -19,6 +19,9 @@ public class ModConfig {
     public int satchelHudY = 10;
     public float satchelHudSize = 1.0f;
     public boolean satchelHudDynamicColors = true;
+    public boolean satchelHudShowBackground = true;
+    public boolean satchelHudTextShadow = true;
+    public boolean satchelHudShowIcons = false;
     public int satchelHudColorEmpty = 0xFF00FF00; // Green
     public int satchelHudColorFull = 0xFFFF0000;  // Red
     public boolean dropProtectionEnabled = true;

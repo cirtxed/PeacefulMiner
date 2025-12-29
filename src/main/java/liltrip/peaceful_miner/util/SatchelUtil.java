@@ -20,11 +20,13 @@ public class SatchelUtil {
         public final String name;
         public final int count;
         public final int capacity;
+        public final ItemStack stack;
 
-        public SatchelInfo(String name, int count, int capacity) {
+        public SatchelInfo(String name, int count, int capacity, ItemStack stack) {
             this.name = name;
             this.count = count;
             this.capacity = capacity;
+            this.stack = stack;
         }
 
         public float getPercentage() {
@@ -43,7 +45,7 @@ public class SatchelUtil {
             if (info != null) {
                 if (satchelMap.containsKey(info.name)) {
                     SatchelInfo existing = satchelMap.get(info.name);
-                    satchelMap.put(info.name, new SatchelInfo(info.name, existing.count + info.count, existing.capacity + info.capacity));
+                    satchelMap.put(info.name, new SatchelInfo(info.name, existing.count + info.count, existing.capacity + info.capacity, existing.stack));
                 } else {
                     satchelMap.put(info.name, info);
                 }
@@ -98,10 +100,7 @@ public class SatchelUtil {
             name = ore.substring(0, 1).toUpperCase() + ore.substring(1).toLowerCase() + (refined ? " Refined" : " Ore") + " Satchel";
         }
 
-        // Debug logging
-        System.out.println("[DEBUG_LOG] Satchel check: " + name + " | ID: " + itemId + " | Count: " + count + " | Capacity: " + capacity);
-
-        return new SatchelInfo(name, count, capacity);
+        return new SatchelInfo(name, count, capacity, stack);
     }
 
     private static final Pattern CAPACITY_PATTERN = Pattern.compile("/\\s*([\\d,]+)");
